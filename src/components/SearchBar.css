@@ -1,0 +1,27 @@
+.input-wrapper {
+  background-color: white;
+  width: 100%;
+  border-radius: 10px;
+  height: 25px;
+  padding: 0 15px;
+  box-shadow: 0 0 0 #ddd;
+  display: flex;
+  align-items: center;
+}
+
+input {
+  background-color: transparent;
+  border: none;
+  height: 100%;
+  font: 15px normal Arial;
+  width: 100%;
+  margin-left: 5px;
+}
+
+input:focus {
+  outline: none;
+}
+
+.search-icon {
+  color: cornflowerblue;
+}
