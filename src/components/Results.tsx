@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 
-class Results extends Component<unknown, unknown> {
+class Results extends Component<{ results: [] }, unknown> {
   render() {
-    return <h1>Results</h1>;
+    return (
+      <div>
+        <h1>Results</h1>
+        <div>{this.props.results.join()}</div>
+      </div>
+    );
   }
 }
 

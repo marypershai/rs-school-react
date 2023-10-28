@@ -3,35 +3,65 @@ import { FaSearch } from 'react-icons/fa';
 import './SearchBar.css';
 
 type SearchBarState = {
-  inputValue: string;
+  inputValue?: string;
+  results?: [];
+  filteredResults?: [];
 };
 
-class SearchBar extends Component<unknown, SearchBarState> {
+type SearchBarProps = {
+  updateResults: (value: []) => void;
+};
+
+class SearchBar extends Component<SearchBarProps, SearchBarState> {
   state = {
     inputValue: this.getInitialValue(),
+    results: [],
+    filteredResults: [],
   };
 
   fetchData() {
-    fetch('https://pokeapi.co/api/v2/pokemon/ditto')
+    fetch('https://swapi.dev/api/people/')
       .then((responce) => responce.json())
       .then((json) => {
         console.log(json);
+        this.setState({ results: json.results });
       });
   }
 
-  handleValue(value) {
+  handleValue = (value: string) => {
     this.setState({ inputValue: value });
-    this.fetchData();
     this.setInitialValue(value);
-  }
+  };
 
-  getInitialValue() {
+  getInitialValue(): string {
     return localStorage.getItem('inputValue') || '';
   }
 
-  setInitialValue(value) {
+  setInitialValue(value): void {
     return localStorage.setItem('inputValue', value);
   }
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  searchResults = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    this.filterResults(this.state.inputValue);
+    console.log('this.state.filt');
+    console.log(this.state.filteredResults);
+    this.props.updateResults(this.state.filteredResults);
+  };
+
+  filterResults = (value: string) => {
+    const cloneRes = this.state.results.slice();
+    const filtered: [] = cloneRes.filter((user) =>
+      user.name.toLowerCase().includes(value.toLowerCase())
+    );
+    console.log('filtered');
+    console.log(filtered);
+    this.setState({ filteredResults: filtered });
+  };
 
   render() {
     return (
@@ -43,8 +73,8 @@ class SearchBar extends Component<unknown, SearchBarState> {
             value={this.state.inputValue}
             onChange={(e) => this.handleValue(e.target.value)}
           />
+          <button onClick={this.searchResults}>Search</button>
         </div>
-        <button>Search</button>
       </div>
     );
   }
