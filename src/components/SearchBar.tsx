@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import './SearchBar.css';
 import { PersonInfo, PersonsList } from '../interfaces/interfaces';
+import ErrorBoundary from '../ErrorBoundary';
 
 type SearchBarState = {
   inputValue?: string;
   results?: [PersonInfo];
-  filteredResults?: [PersonInfo];
+  isLoading?: boolean;
 };
 
 type SearchBarProps = {
@@ -17,20 +18,32 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
   state = {
     inputValue: this.getInitialValue(),
     results: [],
-    filteredResults: [],
+    isLoading: false,
   };
 
-  fetchData = async () => {
-    const result: Response = await fetch('https://swapi.dev/api/people/');
-    await result.json().then((res: PersonsList) => {
-      this.setState({ results: res.results });
-    });
-  };
+  fetchData() {
+    this.setState({ isLoading: true });
+    const url: string = 'https://swapi.dev/api/people/';
+    const endPoint: string = this.state.inputValue
+      ? url + '?search=' + this.state.inputValue
+      : url;
+    fetch(endPoint)
+      .then((response) => response.json())
+      .then((json) => {
+        this.setState({ results: json.results });
+        this.setState({ isLoading: false });
+      })
+      .catch(() => {
+        this.setState({ isLoading: true });
+      });
+    console.log('fetchData');
+    console.log(this.state.results);
+  }
 
   handleValue = (value: string) => {
     this.setState({ inputValue: value });
     this.setInitialValue(value);
-    this.filterResults(this.state.inputValue);
+    this.setState({ isLoading: false });
   };
 
   getInitialValue(): string {
@@ -41,41 +54,41 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
     return localStorage.setItem('inputValue', value);
   }
 
-  componentDidMount() {
-    this.fetchData().then((r) => console.log(this.state.results));
-  }
-
   searchResults = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    this.props.updateResults(this.state.filteredResults);
+    this.fetchData();
+    console.log('props');
+    console.log(this.state.results);
+    this.props.updateResults(this.state.results);
   };
 
-  filterResults = (value: string) => {
-    const cloneRes: [PersonInfo] = this.state.results.slice();
-    const filtered: [PersonInfo] = cloneRes.filter((user) =>
-      user.name.toLowerCase().includes(value.toLowerCase())
-    );
-    this.setState((prevState) => {
-      return {
-        filteredResults: filtered,
-      };
-    });
-  };
+  componentDidMount() {
+    this.fetchData();
+  }
 
   render() {
     return (
       <div>
-        <div className="input-wrapper">
-          <FaSearch className="search-icon" />
-          <input
-            placeholder="Type to search"
-            value={this.state.inputValue}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              this.handleValue(e.target.value)
-            }
-          />
-          <button onClick={this.searchResults}>Search</button>
-        </div>
+        <ErrorBoundary
+          fallback={<p>Something went wrong, please reload the page</p>}
+        >
+          <div className="input-wrapper">
+            <FaSearch className="search-icon" />
+            <input
+              placeholder="Type to search"
+              value={this.state.inputValue}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                this.handleValue(e.target.value)
+              }
+            />
+            <button
+              onClick={this.searchResults}
+              disabled={this.state.isLoading}
+            >
+              Search
+            </button>
+          </div>
+        </ErrorBoundary>
       </div>
     );
   }

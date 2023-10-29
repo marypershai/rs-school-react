@@ -5,20 +5,18 @@ import './App.css';
 import { PersonInfo } from './interfaces/interfaces';
 
 type AppSate = {
-  filteredResults?: [PersonInfo];
-  isLoading?: boolean;
+  results?: [PersonInfo];
 };
 
 class App extends Component<unknown, AppSate> {
   state = {
-    filteredResults: [],
-    isLoading: false,
+    results: [],
   };
 
   updateResults = (value) => {
     this.setState((prevState) => {
       return {
-        filteredResults: value,
+        results: value,
       };
     });
   };
@@ -28,7 +26,7 @@ class App extends Component<unknown, AppSate> {
       <div className="App">
         <div className="search-bar-component">
           <SearchBar updateResults={this.updateResults} />
-          <Results results={this.state.filteredResults} />
+          <Results results={this.state.results} />
         </div>
       </div>
     );
