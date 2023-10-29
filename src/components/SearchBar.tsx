@@ -36,8 +36,6 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
       .catch(() => {
         this.setState({ isLoading: true });
       });
-    console.log('fetchData');
-    console.log(this.state.results);
   }
 
   handleValue = (value: string) => {
@@ -57,8 +55,6 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
   searchResults = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     this.fetchData();
-    console.log('props');
-    console.log(this.state.results);
     this.props.updateResults(this.state.results);
   };
 
