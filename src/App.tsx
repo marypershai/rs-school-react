@@ -6,11 +6,13 @@ import { PersonInfo } from './interfaces/interfaces';
 
 type AppSate = {
   filteredResults?: [PersonInfo];
+  isLoading?: boolean;
 };
 
 class App extends Component<unknown, AppSate> {
   state = {
     filteredResults: [],
+    isLoading: false,
   };
 
   updateResults = (value) => {

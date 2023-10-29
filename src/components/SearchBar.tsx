@@ -63,7 +63,6 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
   };
 
   render() {
-    console.log('render');
     return (
       <div>
         <div className="input-wrapper">
