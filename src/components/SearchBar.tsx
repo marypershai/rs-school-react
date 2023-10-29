@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import './SearchBar.css';
+import { PersonInfo, PersonsList } from '../interfaces/interfaces';
 
 type SearchBarState = {
   inputValue?: string;
-  results?: [];
-  filteredResults?: [];
+  results?: [PersonInfo];
+  filteredResults?: [PersonInfo];
 };
 
 type SearchBarProps = {
@@ -19,18 +20,17 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
     filteredResults: [],
   };
 
-  fetchData() {
-    fetch('https://swapi.dev/api/people/')
-      .then((responce) => responce.json())
-      .then((json) => {
-        console.log(json);
-        this.setState({ results: json.results });
-      });
-  }
+  fetchData = async () => {
+    const result: Response = await fetch('https://swapi.dev/api/people/');
+    await result.json().then((res: PersonsList) => {
+      this.setState({ results: res.results });
+    });
+  };
 
   handleValue = (value: string) => {
     this.setState({ inputValue: value });
     this.setInitialValue(value);
+    this.filterResults(this.state.inputValue);
   };
 
   getInitialValue(): string {
@@ -42,28 +42,28 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
   }
 
   componentDidMount() {
-    this.fetchData();
+    this.fetchData().then((r) => console.log(this.state.results));
   }
 
   searchResults = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    this.filterResults(this.state.inputValue);
-    console.log('this.state.filt');
-    console.log(this.state.filteredResults);
     this.props.updateResults(this.state.filteredResults);
   };
 
   filterResults = (value: string) => {
-    const cloneRes = this.state.results.slice();
-    const filtered: [] = cloneRes.filter((user) =>
+    const cloneRes: [PersonInfo] = this.state.results.slice();
+    const filtered: [PersonInfo] = cloneRes.filter((user) =>
       user.name.toLowerCase().includes(value.toLowerCase())
     );
-    console.log('filtered');
-    console.log(filtered);
-    this.setState({ filteredResults: filtered });
+    this.setState((prevState) => {
+      return {
+        filteredResults: filtered,
+      };
+    });
   };
 
   render() {
+    console.log('render');
     return (
       <div>
         <div className="input-wrapper">
@@ -71,7 +71,9 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
           <input
             placeholder="Type to search"
             value={this.state.inputValue}
-            onChange={(e) => this.handleValue(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              this.handleValue(e.target.value)
+            }
           />
           <button onClick={this.searchResults}>Search</button>
         </div>

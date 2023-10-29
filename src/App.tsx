@@ -2,23 +2,31 @@ import React, { Component } from 'react';
 import SearchBar from './components/SearchBar';
 import Results from './components/Results';
 import './App.css';
+import { PersonInfo } from './interfaces/interfaces';
 
-class App extends Component<unknown, unknown> {
+type AppSate = {
+  filteredResults?: [PersonInfo];
+};
+
+class App extends Component<unknown, AppSate> {
   state = {
-    results: [],
+    filteredResults: [],
   };
 
   updateResults = (value) => {
-    this.setState({ results: value });
-    console.log('--------------');
-    console.log(value);
+    this.setState((prevState) => {
+      return {
+        filteredResults: value,
+      };
+    });
   };
+
   render() {
     return (
       <div className="App">
         <div className="search-bar-component">
           <SearchBar updateResults={this.updateResults} />
-          <Results results={this.state.results} />
+          <Results results={this.state.filteredResults} />
         </div>
       </div>
     );
