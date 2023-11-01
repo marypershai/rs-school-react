@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { PersonInfo } from '../interfaces/interfaces';
-import './Results.css';
+import '../assets/styles/Results.css';
 
 class Results extends Component<{ results: [PersonInfo] }, unknown> {
   render() {

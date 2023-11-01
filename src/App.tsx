@@ -6,11 +6,13 @@ import { PersonInfo } from './interfaces/interfaces';
 
 type AppSate = {
   results?: [PersonInfo];
+  hasError?: boolean;
 };
 
 class App extends Component<unknown, AppSate> {
   state = {
     results: [],
+    hasError: false,
   };
 
   updateResults = (value) => {
