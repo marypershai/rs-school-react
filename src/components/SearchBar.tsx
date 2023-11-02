@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import '../assets/styles/SearchBar.css';
-import { PersonInfo, PersonsList } from '../interfaces/interfaces';
+import { PersonInfo } from '../interfaces/interfaces';
 
 type SearchBarState = {
   inputValue?: string;
@@ -16,7 +16,7 @@ type SearchBarProps = {
 
 class SearchBar extends Component<SearchBarProps, SearchBarState> {
   state = {
-    inputValue: this.getInitialValue(),
+    inputValue: '',
     results: [],
     isLoading: false,
     hasError: false,
@@ -27,17 +27,18 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
     this.setState = this.setState.bind(this);
   }
 
-  fetchData() {
+  fetchData(value) {
+    const query = value.toLowerCase();
     this.setState({ isLoading: true });
     const url: string = 'https://swapi.dev/api/people/';
-    const endPoint: string = this.state.inputValue
-      ? url + '?search=' + this.state.inputValue
-      : url;
+    const endPoint: string = query ? url + '?search=' + query : url;
     fetch(endPoint)
       .then((response) => response.json())
       .then((json) => {
         this.setState({ results: json.results });
         this.setState({ isLoading: false });
+        this.setInitialValue(query);
+        this.props.updateResults(json.results);
       })
       .catch(() => {
         this.setState({ isLoading: true });
@@ -58,16 +59,11 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
     return localStorage.setItem('inputValue', value);
   }
 
-  searchResults = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    this.fetchData();
-    this.props.updateResults(this.state.results);
-  };
-
-  componentDidMount() {
-    this.fetchData();
+  componentDidMount(): void {
+    const value = this.getInitialValue();
+    this.setState({ ...this.state, inputValue: value });
+    this.fetchData(value);
   }
-
   handleError(event: React.MouseEvent<HTMLButtonElement>) {
     this.setState({
       ...this.state,
@@ -90,7 +86,10 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
               this.handleValue(e.target.value)
             }
           />
-          <button onClick={this.searchResults} disabled={this.state.isLoading}>
+          <button
+            onClick={() => this.fetchData(this.state.inputValue)}
+            disabled={this.state.isLoading}
+          >
             Search
           </button>
         </div>
