@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import SearchBar from './components/SearchBar';
 import Results from './components/Results';
 import './App.css';
@@ -9,30 +9,20 @@ type AppSate = {
   hasError?: boolean;
 };
 
-class App extends Component<unknown, AppSate> {
-  state = {
-    results: [],
-    hasError: false,
+export default function App() {
+  const [results, setResults] = useState([]);
+  const [hasError, setHasError] = useState(false);
+
+  const updateResults = (value) => {
+    setResults(value);
   };
 
-  updateResults = (value) => {
-    this.setState((prevState) => {
-      return {
-        results: value,
-      };
-    });
-  };
-
-  render() {
-    return (
-      <div className="App">
-        <div className="search-bar-component">
-          <SearchBar updateResults={this.updateResults} />
-          <Results results={this.state.results} />
-        </div>
+  return (
+    <div className="App">
+      <div className="search-bar-component">
+        <SearchBar updateResults={updateResults} />
+        <Results results={results} />
       </div>
-    );
-  }
+    </div>
+  );
 }
-
-export default App;
