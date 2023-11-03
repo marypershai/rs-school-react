@@ -1,7 +1,6 @@
 import React, { Component, useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
-import '../assets/styles/SearchBar.css';
-import { PersonInfo } from '../interfaces/interfaces';
+import './SearchBar.css';
 
 export default function SearchBar(props) {
   const [inputValue, setInputValue] = useState('');
@@ -14,15 +13,16 @@ export default function SearchBar(props) {
   const fetchData = (value) => {
     const query = value.toLowerCase();
     setIsLoading(true);
-    const url: string = 'https://swapi.dev/api/people/';
-    const endPoint: string = query ? url + '?search=' + query : url;
+    const url: string = 'https://api.jikan.moe/v4/anime';
+    const endPoint: string = query ? url + '?q=' + query : url;
+
     fetch(endPoint)
       .then((response) => response.json())
       .then((json) => {
-        setResults(json.results);
+        setResults(json.data);
         setIsLoading(false);
         setInitialValue(query);
-        props.updateResults(json.results);
+        props.updateResults(json.data);
       })
       .catch((error) => {
         console.log(error);

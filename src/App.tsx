@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react';
-import SearchBar from './components/SearchBar';
-import Results from './components/Results';
+import SearchBar from './components/SearchBar/SearchBar';
+import Results from './components/Results/Results';
 import './App.css';
 import { PersonInfo } from './interfaces/interfaces';
 
