@@ -1,3 +1,11 @@
+.search-bar-component {
+  padding-top: 20vh;
+  width: 40%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
 .input-wrapper {
   background-color: white;
   width: 100%;

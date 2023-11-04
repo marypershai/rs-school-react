@@ -10,10 +10,10 @@ export default function Results(props) {
   const productId = searchParams.get('productId');
 
   return (
-    <div>
+    <div className={productId ? 'details-layout' : ''}>
       <h1>Results</h1>
       <PageLimit />
-      {productId ? <Outlet /> : ''}
+
       <ul className="results-wrapper">
         {props.results.map((item: Daum) => (
           <li
@@ -43,6 +43,7 @@ export default function Results(props) {
           </li>
         ))}
       </ul>
+      <div>{productId ? <Outlet /> : ''}</div>
     </div>
   );
 }

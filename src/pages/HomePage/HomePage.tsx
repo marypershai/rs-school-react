@@ -10,7 +10,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="search-bar-component">
+    <div>
       <SearchBar updateResults={updateResults} />
       <Results results={results} />
     </div>

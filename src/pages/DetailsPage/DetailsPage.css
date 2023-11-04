@@ -1,0 +1,12 @@
+.details-page-container {
+  padding-top: 50px;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  width: 320px;
+  margin: 0 auto;
+}
+
+.details-page-container div {
+  position: fixed;
+}

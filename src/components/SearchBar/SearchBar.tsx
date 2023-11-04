@@ -57,7 +57,7 @@ export default function SearchBar(props) {
   if (hasError) throw new Error('Fallback');
 
   return (
-    <div>
+    <div className="search-bar-component">
       <button onClick={(e) => handleError(e)}>Make Error</button>
       <div className="input-wrapper">
         <FaSearch className="search-icon" />

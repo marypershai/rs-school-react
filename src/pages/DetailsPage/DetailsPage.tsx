@@ -2,6 +2,7 @@ import React, { Component, useCallback, useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { Card } from '../../components/Card/Card';
 import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner';
+import './DetailsPage.css';
 
 export default function DetailsPage() {
   const [searchParams] = useSearchParams();
@@ -30,7 +31,7 @@ export default function DetailsPage() {
   }, [loadCard]);
 
   return (
-    <div className="details-component">
+    <div className="details-page-container">
       {loading ? <LoadingSpinner /> : card ? <Card card={card} /> : null}
     </div>
   );
