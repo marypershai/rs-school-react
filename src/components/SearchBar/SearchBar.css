@@ -1,5 +1,5 @@
 .search-bar-component {
-  padding-top: 20vh;
+  padding: 20px 0;
   width: 40%;
   margin: auto;
   display: flex;
@@ -31,5 +31,5 @@ input:focus {
 }
 
 .search-icon {
-  color: cornflowerblue;
+  color: #21598f;
 }

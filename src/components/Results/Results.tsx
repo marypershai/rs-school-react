@@ -10,11 +10,24 @@ export default function Results(props) {
   const productId = searchParams.get('productId');
 
   return (
-    <div className={productId ? 'details-layout' : ''}>
-      <h1>Results</h1>
-      <PageLimit />
-
-      <ul className="results-wrapper">
+    <div
+      className={
+        productId ? 'details-layout results-component' : 'results-component'
+      }
+    >
+      <ul
+        className="results-wrapper"
+        onClick={(e) => {
+          console.log(e.target);
+          console.log(e.currentTarget);
+          if (e.target === e.currentTarget) {
+            setSearchParams((searchParams) => {
+              searchParams.delete('productId');
+              return searchParams;
+            });
+          }
+        }}
+      >
         {props.results.map((item: Daum) => (
           <li
             key={item.mal_id}
@@ -43,7 +56,7 @@ export default function Results(props) {
           </li>
         ))}
       </ul>
-      <div>{productId ? <Outlet /> : ''}</div>
+      {productId ? <Outlet /> : ''}
     </div>
   );
 }

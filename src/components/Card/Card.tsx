@@ -5,17 +5,16 @@ export function Card(props) {
   const [, setSearchParams] = useSearchParams();
 
   return (
-    <div key={mal_id}>
+    <div key={mal_id} className="card-container">
       <button
+        className="close-button"
         onClick={() => {
           setSearchParams((searchParams) => {
             searchParams.delete('productId');
             return searchParams;
           });
         }}
-      >
-        close
-      </button>
+      ></button>
       <h3>{title}</h3>
       <p>{duration}</p>
       <p>{synopsis}</p>

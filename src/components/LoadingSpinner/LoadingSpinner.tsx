@@ -4,7 +4,7 @@ export function LoadingSpinner() {
       <svg
         width="50"
         height="50"
-        fill="blue"
+        fill="#21598f"
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
       >
