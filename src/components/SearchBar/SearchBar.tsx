@@ -25,7 +25,6 @@ export default function SearchBar(props) {
         props.updateResults(json.data);
       })
       .catch((error) => {
-        console.log(error);
         setIsLoading(true);
       });
   };
