@@ -1,0 +1,24 @@
+.pagination-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.pagination-buttons button {
+  border: 1px solid #cccccc;
+  background-color: #fff;
+  border-radius: 21px;
+  padding: 10px;
+  width: 42px;
+}
+
+.pagination-buttons button:hover {
+  color: #21598f;
+  border-color: #21598f;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}

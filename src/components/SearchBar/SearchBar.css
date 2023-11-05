@@ -11,7 +11,7 @@
   width: 100%;
   border-radius: 10px;
   height: 25px;
-  padding: 0 15px;
+  padding: 0 0 0 15px;
   box-shadow: 0 0 0 #ddd;
   display: flex;
   align-items: center;
@@ -32,4 +32,25 @@ input:focus {
 
 .search-icon {
   color: #21598f;
+}
+
+.error-btn {
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+}
+
+.search-btn {
+  border: none;
+  background-color: #21598f;
+  border-radius: 0 10px 10px 0;
+  color: white;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.nav-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
 }

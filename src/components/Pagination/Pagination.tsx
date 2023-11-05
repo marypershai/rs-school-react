@@ -1,4 +1,4 @@
-import { SetURLSearchParams } from 'react-router-dom';
+import './Pagination.css';
 
 export function Pagination(props) {
   const { setSearchParams, page } = props;
@@ -11,8 +11,9 @@ export function Pagination(props) {
   }
 
   return (
-    <div className="button-left">
+    <div className="pagination-buttons">
       <button
+        className="button-left"
         onClick={() => {
           changePage(page - 1);
         }}
@@ -22,6 +23,7 @@ export function Pagination(props) {
       </button>
       <p>{page}</p>
       <button
+        className="button-right"
         onClick={() => {
           changePage(page + 1);
         }}

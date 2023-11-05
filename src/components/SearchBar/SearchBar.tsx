@@ -39,9 +39,9 @@ export default function SearchBar(props) {
   const createFetchDataURL = (value, limit) => {
     const query = value.toLowerCase();
     let url: string = 'https://api.jikan.moe/v4/anime';
-    url = query ? url + '?q=' + query : url;
-    url = limit ? url + '&limit=' + limit : url;
-    url = page ? url + '&page=' + page : '&page=1';
+    url = query ? url + '?q=' + query + '&' : url + '?';
+    url = limit ? url + 'limit=' + limit + '&' : url + '&';
+    url = page ? url + 'page=' + page : 'page=1';
     return url;
   };
 
@@ -75,7 +75,9 @@ export default function SearchBar(props) {
 
   return (
     <div className="search-bar-component">
-      <button onClick={(e) => handleError(e)}>Make Error</button>
+      <button className="error-btn" onClick={(e) => handleError(e)}>
+        Make Error
+      </button>
       <div className="input-wrapper">
         <FaSearch className="search-icon" />
         <input
@@ -86,14 +88,23 @@ export default function SearchBar(props) {
           }
         />
         <button
-          onClick={() => fetchData(inputValue, pageLimit)}
+          className="search-btn"
+          onClick={() => {
+            setSearchParams((searchParams) => {
+              searchParams.set('page', '1');
+              return searchParams;
+            });
+            fetchData(inputValue, pageLimit);
+          }}
           disabled={isLoading}
         >
           Search
         </button>
       </div>
-      <PageLimit></PageLimit>
-      <Pagination page={page} setSearchParams={setSearchParams}></Pagination>
+      <div className="nav-bar">
+        <PageLimit></PageLimit>
+        <Pagination page={page} setSearchParams={setSearchParams}></Pagination>
+      </div>
     </div>
   );
 }

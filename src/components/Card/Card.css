@@ -2,6 +2,7 @@
   position: fixed;
   padding: 0 30px;
   background: white;
+  min-height: 1000px;
 }
 
 .close-button {

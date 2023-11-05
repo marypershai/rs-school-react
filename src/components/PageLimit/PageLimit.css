@@ -1,0 +1,12 @@
+.select-limit {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.select-limit select {
+  border: 1px solid #cccccc;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+}

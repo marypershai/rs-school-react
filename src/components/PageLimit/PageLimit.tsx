@@ -1,5 +1,6 @@
 import React, { Component, useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import './PageLimit.css';
 
 export default function PageLimit(props) {
   const [limit, setLimit] = useState(10);
@@ -15,7 +16,7 @@ export default function PageLimit(props) {
   }, [limit]);
 
   return (
-    <div>
+    <div className="select-limit">
       <select
         name="selectedLimit"
         defaultValue={limit}
@@ -27,7 +28,6 @@ export default function PageLimit(props) {
             });
           }
           setLimit(+event.target.value);
-          // props.updatePageLimitResults(limit);
         }}
       >
         <option value="5">5</option>
