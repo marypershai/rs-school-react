@@ -9,8 +9,7 @@ export default function SearchBar(props) {
   const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [limit, setLimit] = useState();
-  const [searchParams, setSearchParams] = useSearchParams('');
+  const [searchParams] = useSearchParams('');
 
   const pageLimit = searchParams.get('pageLimit');
 
@@ -32,7 +31,6 @@ export default function SearchBar(props) {
       .catch((error) => {
         setIsLoading(true);
       });
-    setLimit(+pageLimit);
   };
 
   const createFetchDataURL = (value, limit) => {
@@ -69,10 +67,6 @@ export default function SearchBar(props) {
     event.preventDefault();
   };
 
-  const updateLimit = (value) => {
-    setLimit(value);
-  };
-
   if (hasError) throw new Error('Fallback');
 
   return (
@@ -88,13 +82,13 @@ export default function SearchBar(props) {
           }
         />
         <button
-          onClick={() => fetchData(inputValue, limit)}
+          onClick={() => fetchData(inputValue, pageLimit)}
           disabled={isLoading}
         >
           Search
         </button>
       </div>
-      <PageLimit updatePageLimitResults={updateLimit}></PageLimit>
+      <PageLimit></PageLimit>
     </div>
   );
 }

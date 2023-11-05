@@ -27,7 +27,7 @@ export default function PageLimit(props) {
             });
           }
           setLimit(+event.target.value);
-          props.updatePageLimitResults(limit);
+          // props.updatePageLimitResults(limit);
         }}
       >
         <option value="5">5</option>
