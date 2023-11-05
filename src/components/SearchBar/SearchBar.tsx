@@ -2,6 +2,7 @@ import React, { Component, useContext, useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import './SearchBar.css';
 import PageLimit from '../PageLimit/PageLimit';
+import { useSearchParams } from 'react-router-dom';
 
 export default function SearchBar(props) {
   const [inputValue, setInputValue] = useState('');
@@ -9,10 +10,13 @@ export default function SearchBar(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [limit, setLimit] = useState();
+  const [searchParams, setSearchParams] = useSearchParams('');
+
+  const pageLimit = searchParams.get('pageLimit');
 
   const { setSearchTerm } = props;
 
-  const fetchData = (value) => {
+  const fetchData = (value, limit) => {
     const query = value.toLowerCase();
 
     const url = createFetchDataURL(value, limit);
@@ -28,6 +32,7 @@ export default function SearchBar(props) {
       .catch((error) => {
         setIsLoading(true);
       });
+    setLimit(+pageLimit);
   };
 
   const createFetchDataURL = (value, limit) => {
@@ -54,9 +59,10 @@ export default function SearchBar(props) {
 
   useEffect(() => {
     const value = getInitialValue();
+
     setInputValue(value);
-    fetchData(value);
-  }, [setSearchTerm, limit]);
+    fetchData(value, pageLimit);
+  }, [setSearchTerm, pageLimit]);
 
   const handleError = (event: React.MouseEvent<HTMLButtonElement>) => {
     setHasError(true);
@@ -81,7 +87,10 @@ export default function SearchBar(props) {
             handleValue(e.target.value)
           }
         />
-        <button onClick={() => fetchData(inputValue)} disabled={isLoading}>
+        <button
+          onClick={() => fetchData(inputValue, limit)}
+          disabled={isLoading}
+        >
           Search
         </button>
       </div>
