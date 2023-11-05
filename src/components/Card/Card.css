@@ -7,14 +7,12 @@
 .close-button {
   text-decoration: none;
   margin-right: 20px;
-  background: transparent;
   box-shadow: none;
   border: none;
   box-sizing: border-box;
   cursor: pointer;
   width: 20px;
   height: 20px;
-  position: relative;
   border-radius: 50%;
   background-color: #fff;
   opacity: 0.8;

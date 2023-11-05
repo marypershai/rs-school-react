@@ -1,4 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
+import './Card.css';
 
 export function Card(props) {
   const { mal_id, duration, title, synopsis } = props.card;

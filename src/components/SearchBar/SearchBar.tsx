@@ -1,22 +1,23 @@
 import React, { Component, useContext, useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import './SearchBar.css';
+import PageLimit from '../PageLimit/PageLimit';
 
 export default function SearchBar(props) {
   const [inputValue, setInputValue] = useState('');
-  const [, setResults] = useState([]);
+  const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const [limit, setLimit] = useState();
 
   const { setSearchTerm } = props;
 
   const fetchData = (value) => {
     const query = value.toLowerCase();
-    setIsLoading(true);
-    const url: string = 'https://api.jikan.moe/v4/anime';
-    const endPoint: string = query ? url + '?q=' + query : url;
 
-    fetch(endPoint)
+    const url = createFetchDataURL(value, limit);
+
+    fetch(url)
       .then((response) => response.json())
       .then((json) => {
         setResults(json.data);
@@ -27,6 +28,14 @@ export default function SearchBar(props) {
       .catch((error) => {
         setIsLoading(true);
       });
+  };
+
+  const createFetchDataURL = (value, limit) => {
+    const query = value.toLowerCase();
+    let url: string = 'https://api.jikan.moe/v4/anime';
+    url = query ? url + '?q=' + query : url;
+    url = limit ? url + '&limit=' + limit : url;
+    return url;
   };
 
   const handleValue = (value: string) => {
@@ -47,11 +56,15 @@ export default function SearchBar(props) {
     const value = getInitialValue();
     setInputValue(value);
     fetchData(value);
-  }, [setSearchTerm]);
+  }, [setSearchTerm, limit]);
 
   const handleError = (event: React.MouseEvent<HTMLButtonElement>) => {
     setHasError(true);
     event.preventDefault();
+  };
+
+  const updateLimit = (value) => {
+    setLimit(value);
   };
 
   if (hasError) throw new Error('Fallback');
@@ -72,6 +85,7 @@ export default function SearchBar(props) {
           Search
         </button>
       </div>
+      <PageLimit updatePageLimitResults={updateLimit}></PageLimit>
     </div>
   );
 }
