@@ -40,7 +40,7 @@ export default function SearchBar(props) {
     const query = value.toLowerCase();
     let url: string = 'https://api.jikan.moe/v4/anime';
     url = query ? url + '?q=' + query + '&' : url + '?';
-    url = limit ? url + 'limit=' + limit + '&' : url + '&';
+    url = limit ? url + 'limit=' + limit + '&' : url + 'limit=10&';
     url = page ? url + 'page=' + page : 'page=1';
     return url;
   };
