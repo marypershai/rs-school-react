@@ -3,13 +3,16 @@ import { FaSearch } from 'react-icons/fa';
 import './SearchBar.css';
 import PageLimit from '../PageLimit/PageLimit';
 import { useSearchParams } from 'react-router-dom';
+import { Pagination } from '../Pagination/Pagination';
 
 export default function SearchBar(props) {
   const [inputValue, setInputValue] = useState('');
   const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [searchParams] = useSearchParams('');
+  const [searchParams, setSearchParams] = useSearchParams('');
+  const pageQueryParam = searchParams.get('page');
+  const page = pageQueryParam ? Number(pageQueryParam) : 1;
 
   const pageLimit = searchParams.get('pageLimit');
 
@@ -38,6 +41,7 @@ export default function SearchBar(props) {
     let url: string = 'https://api.jikan.moe/v4/anime';
     url = query ? url + '?q=' + query : url;
     url = limit ? url + '&limit=' + limit : url;
+    url = page ? url + '&page=' + page : '&page=1';
     return url;
   };
 
@@ -60,7 +64,7 @@ export default function SearchBar(props) {
 
     setInputValue(value);
     fetchData(value, pageLimit);
-  }, [setSearchTerm, pageLimit]);
+  }, [setSearchTerm, pageLimit, page]);
 
   const handleError = (event: React.MouseEvent<HTMLButtonElement>) => {
     setHasError(true);
@@ -89,6 +93,7 @@ export default function SearchBar(props) {
         </button>
       </div>
       <PageLimit></PageLimit>
+      <Pagination page={page} setSearchParams={setSearchParams}></Pagination>
     </div>
   );
 }
