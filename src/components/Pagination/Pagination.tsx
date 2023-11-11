@@ -1,14 +1,21 @@
 import './Pagination.css';
+import { useSearchParams } from 'react-router-dom';
 
-export function Pagination(props) {
-  const { setSearchParams, page } = props;
+interface PaginationProps {
+  page: number;
+  perPage: string;
+}
 
-  function changePage(page: number) {
+export function Pagination({ page, perPage }: PaginationProps) {
+  // const { setSearchParams, page } = props;
+  const [, setSearchParams] = useSearchParams();
+
+  const changePage = (page: number) => {
     setSearchParams((searchParams) => {
       searchParams.set('page', page.toString());
       return searchParams;
     });
-  }
+  };
 
   return (
     <div className="pagination-buttons">
@@ -19,7 +26,7 @@ export function Pagination(props) {
         }}
         disabled={page === 1}
       >
-        {'<'}
+        &#5176;
       </button>
       <p>{page}</p>
       <button
@@ -28,7 +35,7 @@ export function Pagination(props) {
           changePage(page + 1);
         }}
       >
-        {'>'}
+        &#5171;
       </button>
     </div>
   );
