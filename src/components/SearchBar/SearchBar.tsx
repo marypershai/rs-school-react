@@ -4,6 +4,7 @@ import './SearchBar.css';
 import PageLimit from '../PageLimit/PageLimit';
 import { useSearchParams } from 'react-router-dom';
 import { Pagination } from '../Pagination/Pagination';
+import { SearchValueContext } from '../../contexts/SearchContext';
 
 export default function SearchBar(props) {
   const [inputValue, setInputValue] = useState('');
@@ -13,10 +14,9 @@ export default function SearchBar(props) {
   const [searchParams, setSearchParams] = useSearchParams('');
   const pageQueryParam = searchParams.get('page');
   const page = pageQueryParam ? Number(pageQueryParam) : 1;
+  const { searchValue, setSearchValue } = useContext(SearchValueContext);
 
   const pageLimit = searchParams.get('pageLimit');
-
-  const { setSearchTerm } = props;
 
   const fetchData = (value, limit) => {
     const query = value.toLowerCase();
@@ -60,11 +60,9 @@ export default function SearchBar(props) {
   };
 
   useEffect(() => {
-    const value = getInitialValue();
-
-    setInputValue(value);
-    fetchData(value, pageLimit);
-  }, [setSearchTerm, pageLimit, page]);
+    setInputValue(searchValue);
+    fetchData(searchValue, pageLimit);
+  }, [pageLimit, page]);
 
   const handleError = (event: React.MouseEvent<HTMLButtonElement>) => {
     setHasError(true);
