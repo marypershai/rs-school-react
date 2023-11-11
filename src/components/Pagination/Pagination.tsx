@@ -3,11 +3,9 @@ import { useSearchParams } from 'react-router-dom';
 
 interface PaginationProps {
   page: number;
-  perPage: string;
 }
 
-export function Pagination({ page, perPage }: PaginationProps) {
-  // const { setSearchParams, page } = props;
+export function Pagination({ page }: PaginationProps) {
   const [, setSearchParams] = useSearchParams();
 
   const changePage = (page: number) => {

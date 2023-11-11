@@ -7,7 +7,7 @@ import { Pagination } from '../Pagination/Pagination';
 import { SearchValueContext } from '../../contexts/SearchContext';
 import { ResultsContext } from '../../contexts/ResultsContext';
 
-export default function SearchBar() {
+export default function SearchBar(): JSX.Element {
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
@@ -17,15 +17,15 @@ export default function SearchBar() {
   const { searchValue } = useContext(SearchValueContext);
   const { setResults } = useContext(ResultsContext);
 
-  const pageLimit = searchParams.get('pageLimit');
+  const pageLimit: string = searchParams.get('pageLimit');
 
-  const fetchData = (value, limit) => {
+  const fetchData = (value, limit): void => {
     const query = value.toLowerCase();
 
     const url = createFetchDataURL(value, limit);
 
     fetch(url)
-      .then((response) => response.json())
+      .then((response: Response) => response.json())
       .then((json) => {
         setResults(json.data);
         setIsLoading(false);
@@ -36,7 +36,7 @@ export default function SearchBar() {
       });
   };
 
-  const createFetchDataURL = (value, limit) => {
+  const createFetchDataURL = (value, limit): string => {
     const query = value.toLowerCase();
     let url: string = 'https://api.jikan.moe/v4/anime';
     url = query ? url + '?q=' + query + '&' : url + '?';
@@ -45,7 +45,7 @@ export default function SearchBar() {
     return url;
   };
 
-  const handleValue = (value: string) => {
+  const handleValue = (value: string): void => {
     setInputValue(value);
     setInitialValue(value);
     setIsLoading(false);
@@ -60,7 +60,7 @@ export default function SearchBar() {
     fetchData(searchValue, pageLimit);
   }, [pageLimit, page]);
 
-  const handleError = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleError = (event: React.MouseEvent<HTMLButtonElement>): void => {
     setHasError(true);
     event.preventDefault();
   };

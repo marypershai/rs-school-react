@@ -2,11 +2,11 @@ import React, { Component, useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import './PageLimit.css';
 
-export default function PageLimit(props) {
+export default function PageLimit(): JSX.Element {
   const [limit, setLimit] = useState(10);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const productId = searchParams.get('productId');
+  const productId: string = searchParams.get('productId');
 
   useEffect(() => {
     setSearchParams((searchParams) => {

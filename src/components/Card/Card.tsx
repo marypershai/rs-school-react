@@ -3,7 +3,7 @@ import './Card.css';
 import { useContext } from 'react';
 import { CardContext } from '../../contexts/CardContext';
 
-export function Card() {
+export function Card(): JSX.Element {
   const { card } = useContext(CardContext);
   const [, setSearchParams] = useSearchParams();
 

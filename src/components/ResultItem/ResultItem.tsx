@@ -1,7 +1,12 @@
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { Daum } from '../../interfaces/interfaces';
 
-export default function ResultItem(props) {
+export type ResultItemProps = {
+  item: Daum;
+};
+
+export default function ResultItem(props: ResultItemProps): JSX.Element {
   const [, setSearchParams] = useSearchParams();
 
   const { mal_id, title_english, title, year, images } = props.item;

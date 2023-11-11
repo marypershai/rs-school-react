@@ -5,7 +5,7 @@ import { Outlet, useSearchParams } from 'react-router-dom';
 import ResultItem from '../ResultItem/ResultItem';
 import { ResultsContext } from '../../contexts/ResultsContext';
 
-export default function Results() {
+export default function Results(): JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
   const { items } = useContext(ResultsContext);
 

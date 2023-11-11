@@ -1,4 +1,4 @@
-export function LoadingSpinner() {
+export function LoadingSpinner(): JSX.Element {
   return (
     <div data-testid="loading-spinner">
       <svg
