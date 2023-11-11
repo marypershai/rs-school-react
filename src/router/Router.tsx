@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import HomePage from '../pages/HomePage/HomePage';
 import DetailsPage from '../pages/DetailsPage/DetailsPage';
+import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage';
 
 const pages = {
   mainPage: {
@@ -10,6 +11,10 @@ const pages = {
   detailedPage: {
     path: '',
     element: <DetailsPage />,
+  },
+  notFoundPage: {
+    path: '*',
+    element: <NotFoundPage />,
   },
 };
 
@@ -22,6 +27,10 @@ export const Router = () => {
           element={pages.detailedPage.element}
         />
       </Route>
+      <Route
+        path={pages.notFoundPage.path}
+        element={pages.notFoundPage.element}
+      />
     </Routes>
   );
 };
