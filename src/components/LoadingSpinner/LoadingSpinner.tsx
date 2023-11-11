@@ -1,6 +1,6 @@
 export function LoadingSpinner() {
   return (
-    <div>
+    <div data-testid="loading-spinner">
       <svg
         width="50"
         height="50"
