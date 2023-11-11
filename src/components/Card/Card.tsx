@@ -1,12 +1,14 @@
 import { useSearchParams } from 'react-router-dom';
 import './Card.css';
+import { useContext } from 'react';
+import { CardContext } from '../../contexts/CardContext';
 
-export function Card(props) {
-  const { mal_id, duration, title, synopsis } = props.card;
+export function Card() {
+  const { card } = useContext(CardContext);
   const [, setSearchParams] = useSearchParams();
 
   return (
-    <div key={mal_id} className="card-container">
+    <div key={card.mal_id} className="card-container">
       <button
         className="close-button"
         onClick={() => {
@@ -16,9 +18,9 @@ export function Card(props) {
           });
         }}
       ></button>
-      <h3>{title}</h3>
-      <p>{duration}</p>
-      <p>{synopsis}</p>
+      <h3>{card.title}</h3>
+      <p>{card.duration}</p>
+      <p>{card.synopsis}</p>
     </div>
   );
 }

@@ -9,7 +9,7 @@ export default function Results() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { items } = useContext(ResultsContext);
 
-  const productId = searchParams.get('productId');
+  const productId: string = searchParams.get('productId');
 
   return (
     <div

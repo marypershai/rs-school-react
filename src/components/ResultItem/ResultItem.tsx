@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Outlet, useSearchParams } from 'react-router-dom';
+import React from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 export default function ResultItem(props) {
   const [, setSearchParams] = useSearchParams();

@@ -1,14 +1,21 @@
-import React, { Component, useCallback, useEffect, useState } from 'react';
+import React, {
+  Component,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { Card } from '../../components/Card/Card';
 import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner';
 import './DetailsPage.css';
+import { CardContext } from '../../contexts/CardContext';
 
 export default function DetailsPage() {
   const [searchParams] = useSearchParams();
   const productId = searchParams.get('productId');
   const [loading, isLoading] = useState(false);
-  const [card, setCard] = useState(null);
+  const { card, setCard } = useContext(CardContext);
 
   async function fetchItem(id: string) {
     const api = `https://api.jikan.moe/v4/anime/${id}`;
@@ -32,7 +39,7 @@ export default function DetailsPage() {
 
   return (
     <div className="details-page-container">
-      {loading ? <LoadingSpinner /> : card ? <Card card={card} /> : null}
+      {loading ? <LoadingSpinner /> : card ? <Card /> : null}
     </div>
   );
 }
