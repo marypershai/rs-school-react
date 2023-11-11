@@ -2,6 +2,7 @@ import React, { Component, useState } from 'react';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import Results from '../../components/Results/Results';
 import { SearchValueContextProvider } from '../../contexts/SearchContext';
+import { ResultsContextProvider } from '../../contexts/ResultsContext';
 
 export default function HomePage() {
   const [results, setResults] = useState([]);
@@ -13,8 +14,10 @@ export default function HomePage() {
   return (
     <div>
       <SearchValueContextProvider>
-        <SearchBar updateResults={updateResults} />
-        <Results results={results} />
+        <ResultsContextProvider>
+          <SearchBar updateResults={updateResults} />
+          <Results />
+        </ResultsContextProvider>
       </SearchValueContextProvider>
     </div>
   );

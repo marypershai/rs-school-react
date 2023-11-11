@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component, useContext } from 'react';
 import { Daum } from '../../interfaces/interfaces';
 import './Results.css';
-import PageLimit from '../PageLimit/PageLimit';
 import { Outlet, useSearchParams } from 'react-router-dom';
 import ResultItem from '../ResultItem/ResultItem';
+import { ResultsContext } from '../../contexts/ResultsContext';
 
-export default function Results(props) {
+export default function Results() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { items } = useContext(ResultsContext);
 
   const productId = searchParams.get('productId');
 
@@ -27,7 +28,7 @@ export default function Results(props) {
           }
         }}
       >
-        {props.results.map((item: Daum) => (
+        {items.map((item: Daum) => (
           <ResultItem item={item} key={item.mal_id}></ResultItem>
         ))}
       </ul>

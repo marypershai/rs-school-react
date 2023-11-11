@@ -5,16 +5,17 @@ import PageLimit from '../PageLimit/PageLimit';
 import { useSearchParams } from 'react-router-dom';
 import { Pagination } from '../Pagination/Pagination';
 import { SearchValueContext } from '../../contexts/SearchContext';
+import { ResultsContext } from '../../contexts/ResultsContext';
 
-export default function SearchBar(props) {
+export default function SearchBar() {
   const [inputValue, setInputValue] = useState('');
-  const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams('');
   const pageQueryParam = searchParams.get('page');
   const page = pageQueryParam ? Number(pageQueryParam) : 1;
-  const { searchValue, setSearchValue } = useContext(SearchValueContext);
+  const { searchValue } = useContext(SearchValueContext);
+  const { setResults } = useContext(ResultsContext);
 
   const pageLimit = searchParams.get('pageLimit');
 
@@ -29,7 +30,6 @@ export default function SearchBar(props) {
         setResults(json.data);
         setIsLoading(false);
         setInitialValue(query);
-        props.updateResults(json.data);
       })
       .catch((error) => {
         setIsLoading(true);
@@ -49,10 +49,6 @@ export default function SearchBar(props) {
     setInputValue(value);
     setInitialValue(value);
     setIsLoading(false);
-  };
-
-  const getInitialValue = (): string => {
-    return localStorage.getItem('inputValue') || '';
   };
 
   const setInitialValue = (value): void => {
