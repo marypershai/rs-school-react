@@ -20,16 +20,13 @@ export default function SearchBar(): JSX.Element {
   const pageLimit: string = searchParams.get('pageLimit');
 
   const fetchData = (value, limit): void => {
-    const query = value.toLowerCase();
-
     const url = createFetchDataURL(value, limit);
-
     fetch(url)
       .then((response: Response) => response.json())
       .then((json) => {
         setResults(json.data);
         setIsLoading(false);
-        setInitialValue(query);
+        setInitialValue(value.toLowerCase());
       })
       .catch((error) => {
         setIsLoading(true);
@@ -37,9 +34,8 @@ export default function SearchBar(): JSX.Element {
   };
 
   const createFetchDataURL = (value, limit): string => {
-    const query = value.toLowerCase();
     let url: string = 'https://api.jikan.moe/v4/anime';
-    url = query ? url + '?q=' + query + '&' : url + '?';
+    url = value ? url + '?q=' + value + '&' : url + '?';
     url = limit ? url + 'limit=' + limit + '&' : url + 'limit=10&';
     url = page ? url + 'page=' + page : 'page=1';
     return url;
