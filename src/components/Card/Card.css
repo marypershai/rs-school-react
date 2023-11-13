@@ -1,0 +1,49 @@
+.card-container {
+  position: fixed;
+  padding: 0 30px;
+  background: white;
+  min-height: 1000px;
+}
+
+.close-button {
+  text-decoration: none;
+  margin-right: 20px;
+  box-shadow: none;
+  border: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #fff;
+  opacity: 0.8;
+  transition: 0.3s ease-out;
+  position: absolute;
+  left: -10px;
+  top: -8px;
+}
+.close-button:last-child {
+  margin-right: 0;
+}
+
+.close-button:before,
+.close-button:after {
+  content: '';
+  position: absolute;
+  width: 80%;
+  height: 2px;
+  background-color: #21598f;
+  left: 50%;
+  top: 50%;
+}
+.close-button:after {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.close-button:before {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+.close-button:hover,
+.close-button:focus {
+  transform: scale(1.15);
+  opacity: 1;
+}
